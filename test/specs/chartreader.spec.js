@@ -1,24 +1,33 @@
 const assert = require('assert');
 const MTVpage = require('../pageObject/MTV.page.js');
+const URL = require('../../URL').CHART_URLS;
 
 
-describe('webdriver.io page', function () {
-    it('should have the right title', function () {
-        MTVpage.open();
-        const title = browser.getTitle();
-        assert.equal(title, 'Offizielle Single Top 100 - Musik Charts | MTV Germany');
 
-        MTVpage.acceptAGBs();
-        MTVpage.expandChartList();
-        console.log(`Anzahl Neueinsteiger: ${MTVpage.newEntriesList.length}`);
-        MTVpage.newEntriesList.forEach(function (newEntry, counter=0) {
-            counter++;
-            let parentElement = newEntry.$('..').$('..').$('..');
-            let songName = parentElement.$('.videoTitle').getText();
-            let artistName = parentElement.$('.regular-content').getText();
-            let currentPos = parentElement.$('.currentPos').getText();
-            console.log(`${counter} ${currentPos}: ${songName} - ${artistName} `);
-        });
-
+describe('mtv', function () {
+    it('should display single charts', function () {
+        MTVpage.collectCharts(URL.single, "single");
     });
 });
+
+describe('mtv', function () {
+    it('should display album charts', function () {
+        MTVpage.collectCharts(URL.album, "album");
+    });
+});
+
+describe('mtv', function () {
+    it('should display single midweeks charts', function () {
+        MTVpage.collectCharts(URL.single_midweeks, "single_midweeks");
+    });
+});
+
+describe('mtv', function () {
+    it('should display album midweeks charts', function () {
+        MTVpage.collectCharts(URL.album_midweeks, "album_midweeks");
+    });
+});
+
+
+
+
