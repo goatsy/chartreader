@@ -35,7 +35,7 @@ class MTVPage  {
         this.acceptAGBs();
         this.expandChartList();
         let logCharts="";
-        logCharts+=`taken from ${browser.config.baseUrl}${url}\nAnzahl Neueinsteiger: ${this.newEntriesList.length}\n${this.chartsMainTitle.getText()}`;
+        logCharts+=`taken from ${browser.config.baseUrl}${url}\nAnzahl Neueinsteiger: ${this.newEntriesList.length}\n${this.chartsMainTitle.getText()}\n`;
         this.newEntriesList.forEach(function (newEntry) {
             let parentElement = newEntry.$('..').$('..').$('..');
             let songName = parentElement.$('.videoTitle').getText();
