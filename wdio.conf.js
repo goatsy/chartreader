@@ -56,10 +56,10 @@ exports.config = {
         // 5 instances get started at a time.
         maxInstances: 4,
         //
-        browserName: 'chrome',
-        'goog:chromeOptions': {
-            args: ['--headless', '--disable-gpu', '--window-size=1280,800']
-        }
+        browserName: 'firefox',
+        'moz:firefoxOptions': {
+            args: ['-headless'],
+        },
     }],
     //
     // ===================
@@ -69,6 +69,9 @@ exports.config = {
     //
     // Level of logging verbosity: trace | debug | info | warn | error
     logLevel: 'error',
+    //
+    //
+    outputDir: './reports',
     //
     // Warns when a deprecated command is used
     deprecationWarnings: true,
@@ -186,8 +189,11 @@ exports.config = {
      * Function to be executed after a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
      * @param {Object} test test details
      */
-    // afterTest: function (test) {
-    // },
+     afterTest: function (test) {
+        if (test.error !== undefined) {
+            browser.takeScreenshot();
+        }
+     },
     /**
      * Hook that gets executed after the suite has ended
      * @param {Object} suite suite details

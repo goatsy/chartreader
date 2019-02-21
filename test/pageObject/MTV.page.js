@@ -56,7 +56,7 @@ class MTVPage {
             let currentPos = parentElement.$('.currentPos').getText();
             logCharts += `${currentPos}: ${songName} - ${artistName} \n`;
         });
-        fs.writeFileSync(`./output/${filename}.txt`, logCharts);
+        fs.writeFileSync(`./output/${filename}__${Date.now()}.txt`, logCharts);
     }
 
 }
