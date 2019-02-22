@@ -43,12 +43,12 @@ class MTVPage {
         }, 5000, `expected ${this.chartItemsList.length} to be 100`);
     }
 
-    collectCharts(url, filename) {
-        this.open(url);
+    collectCharts(charts) {
+        this.open(charts.url);
         this.acceptAGBs();
         this.expandChartList();
         let logCharts = "";
-        logCharts += `taken from ${browser.config.baseUrl}${url}\nAnzahl Neueinsteiger: ${this.newEntriesList.length}\n${this.chartsMainTitle.getText()}\n\n`;
+        logCharts += `taken from ${browser.config.baseUrl}${charts.url}\nAnzahl Neueinsteiger: ${this.newEntriesList.length}\n${this.chartsMainTitle.getText()}\n\n`;
         this.newEntriesList.forEach(function (newEntry) {
             let parentElement = newEntry.$('..').$('..').$('..');
             let songName = parentElement.$('.videoTitle').getText();
@@ -56,7 +56,7 @@ class MTVPage {
             let currentPos = parentElement.$('.currentPos').getText();
             logCharts += `${currentPos}: ${songName} - ${artistName} \n`;
         });
-        fs.writeFileSync(`./output/${filename}__${Date.now()}.txt`, logCharts);
+        fs.writeFileSync(`./output/${charts.name}__${Date.now()}.txt`, logCharts);
     }
 
 }
