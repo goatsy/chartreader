@@ -12,6 +12,9 @@
     "type": "git",
     "url": "git+https://github.com/goatsy/chartreader.git"
   },
+  "engines": {
+    "node": "10.15.1"
+  },
   "keywords": [
     "webdriverio",
     "nodejs",
