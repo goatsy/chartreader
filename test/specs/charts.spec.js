@@ -12,7 +12,7 @@ describe('mtv', function () {
 describe('mtv', function () {
     it('should display album charts', function () {
         this.retries(2);
-        MTVpage.collectCharts(CHARTS.single_midweeks);
+        MTVpage.collectCharts(CHARTS.album);
     });
 });
 
