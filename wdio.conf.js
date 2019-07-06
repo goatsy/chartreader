@@ -1,5 +1,5 @@
-const fs = require('fs');
 exports.config = {
+    path: '/wd/hub',
     //
     // ====================
     // Runner Configuration
@@ -8,6 +8,7 @@ exports.config = {
     // WebdriverIO allows it to run your tests in arbitrary locations (e.g. locally or
     // on a remote machine).
     runner: 'local',
+
     //
     // Override the default path of /wd/hub
     services: ['selenium-standalone'],
@@ -29,6 +30,15 @@ exports.config = {
     exclude: [
         // 'path/to/excluded/files'
     ],
+    suites: {
+        charts: [
+            './specs/charts.album.spec.js',
+            './specs/charts.single.spec.js'
+        ],
+        midweeks: [
+            './specs/charts.album.midweeks.spec.js',
+            './specs/charts.single.midweeks.spec.js'        ]
+    },
     //
     // ============
     // Capabilities
@@ -48,20 +58,14 @@ exports.config = {
     maxInstances: 4,
     //
     capabilities: [{
-    // If you have trouble getting all important capabilities together, check out the
-    // Sauce Labs platform configurator - a great tool to configure your capabilities:
-    // https://docs.saucelabs.com/reference/platforms-configurator
-    //
-        // maxInstances can get overwritten per capability. So if you have an in-house Selenium
-        // grid with only 5 firefox instances available you can make sure that not more than
-        // 5 instances get started at a time.
-        maxInstances: 4,
-        //
-        browserName: 'firefox',
-        'moz:firefoxOptions': {
-            args: ['-headless'],
-        },
-    }],
+        browserName: 'chrome',
+        'goog:chromeOptions': {
+            // to run chrome headless the following flags are required
+            // (see https://developers.google.com/web/updates/2017/04/headless-chrome)
+            args: ['--headless', '--disable-gpu'],
+        }
+    }
+    ],
     //
     // ===================
     // Test Configurations
@@ -114,7 +118,7 @@ exports.config = {
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter.html
     reporters: ['dot','spec'],
-    
+
     //
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
@@ -135,13 +139,8 @@ exports.config = {
      * @param {Object} config wdio configuration object
      * @param {Array.<Object>} capabilities list of capabilities details
      */
-     onPrepare: function (config, capabilities) {
-        // const dir = './output';
-        //
-        // if (!fs.existsSync(dir)){
-        //     fs.mkdirSync(dir);
-        // }
-     },
+    //onPrepare: function (config, capabilities) {
+    //},
     /**
      * Gets executed just before initialising the webdriver session and test framework. It allows you
      * to manipulate configurations depending on the capability or spec.
@@ -166,7 +165,7 @@ exports.config = {
      */
     // beforeCommand: function (commandName, args) {
     // },
-    
+
     /**
      * Hook that gets executed before the suite starts
      * @param {Object} suite suite details
@@ -206,7 +205,7 @@ exports.config = {
      */
     // afterSuite: function (suite) {
     // },
-    
+
     /**
      * Runs after a WebdriverIO command gets executed
      * @param {String} commandName hook command name

@@ -33,32 +33,33 @@ class MTVPage {
     }
 
     expandChartList() {
-        for (let i = 0; i <= 3; i++) {
+        do {
             this.loadMoreButton.waitForDisplayed();
             this.loadMoreButton.click();
             browser.pause(1000);
-        }
-        browser.waitUntil(() => {
-            return this.chartItemsList.length === 100
-        }, 5000, `expected ${this.chartItemsList.length} to be 100`);
+        } while (this.chartItemsList.length < 100)
     }
 
-    collectCharts(charts) {
+    collectCharts(charts){
         this.open(charts.url);
         this.acceptAGBs();
         this.expandChartList();
         let logCharts = "";
+        let newEntry;
         logCharts += `taken from ${browser.config.baseUrl}${charts.url}\nAnzahl Neueinsteiger: ${this.newEntriesList.length}\n${this.chartsMainTitle.getText()}\n\n`;
-        this.newEntriesList.forEach(function (newEntry) {
-            let parentElement = newEntry.$('..').$('..').$('..');
-            let songName = parentElement.$('.videoTitle').getText();
-            let artistName = parentElement.$('.regular-content').getText();
-            let currentPos = parentElement.$('.currentPos').getText();
-            logCharts += `${currentPos}: ${songName} - ${artistName} \n`;
-        });
+        this.chartItemsList.forEach(function(item){
+            let songName = item.$('.videoTitle').getText();
+            let artistName = item.$('.regular-content').getText();
+            let currentPos = item.$('.currentPos').getText();
+            let isNew = item.$('.')
+            let newEntry = "";
+            if(item.$("div=neu").isExisting()){
+                newEntry = "- NEU";
+            }
+            logCharts += `${currentPos}: ${songName} - ${artistName} ${newEntry}\n`;
+        })
         fs.writeFileSync(`./output/${charts.name}__${Date.now()}.txt`, logCharts);
     }
-
 }
 
 module.exports = new MTVPage();
