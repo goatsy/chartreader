@@ -54,7 +54,7 @@ class MTVPage {
             let isNew = item.$('.')
             let newEntry = "";
             if(item.$("div=neu").isExisting()){
-                newEntry = "- NEU";
+                newEntry = "(NEU)";
             }
             logCharts += `${currentPos}: ${songName} - ${artistName} ${newEntry}\n`;
         })
